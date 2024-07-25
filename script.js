@@ -1,3 +1,4 @@
+// Function to create a promise that resolves after a random time between 1 and 3 seconds
 function createRandomPromise(index) {
   const time = Math.floor(Math.random() * 3000) + 1000; // Random time between 1000 and 3000 ms
   return new Promise((resolve) => {
@@ -36,6 +37,6 @@ Promise.all(promises).then(results => {
 
   // Add the total row
   const totalRow = document.createElement('tr');
-  totalRow.innerHTML = <td>Total</td><td>${totalTime.toFixed(3)}</td>
+  totalRow.innerHTML = <td>Total</td><td>${totalTime.toFixed(3)}</td>;
   tableBody.appendChild(totalRow);
 });
