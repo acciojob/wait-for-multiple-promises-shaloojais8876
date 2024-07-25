@@ -31,7 +31,7 @@ Promise.all(promises).then(results => {
   // Populate the table with the required values
   results.forEach(result => {
     const row = document.createElement('tr');
-    row.innerHTML = <td>Promise ${result.index}</td><td>${(result.time / 1000).toFixed(3)}</td>;
+    row.innerHTML = <td>Promise ${result.index}</td><td>`${(result.time / 1000).toFixed(3)}`</td>;
     tableBody.appendChild(row);
   });
 
