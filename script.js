@@ -37,6 +37,6 @@ Promise.all(promises).then(results => {
 
   // Add the total row
   const totalRow = document.createElement('tr');
-  totalRow.innerHTML = <td>Total</td><td>${totalTime.toFixed(3)}</td>;
+  totalRow.innerHTML = <td>Total</td><td>`${totalTime.toFixed(3)}`</td>;
   tableBody.appendChild(totalRow);
 });
