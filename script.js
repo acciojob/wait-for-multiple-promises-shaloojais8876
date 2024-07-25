@@ -1,41 +1,41 @@
-//your JS code here. If required.
-const promises = [];
-const table = document.querySelector('table');
-
-function createPromise() {
-  return new Promise(resolve => {
-    const randomTime = Math.floor(Math.random() * 3) + 1;
+function createRandomPromise(index) {
+  const time = Math.floor(Math.random() * 3000) + 1000; // Random time between 1000 and 3000 ms
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(randomTime);
-    }, randomTime * 1000);
+      resolve({ index, time });
+    }, time);
   });
 }
 
-for (let i = 0; i < 3; i++) {
-  promises.push(createPromise());
-}
+// Create an array of 3 promises
+const promises = [
+  createRandomPromise(1),
+  createRandomPromise(2),
+  createRandomPromise(3),
+];
 
-Promise.all(promises)
-  .then(results => {
-    const totalTime = results.reduce((acc, time) => acc + time, 0);
+// By default, add a row that spans 2 columns with the exact text Loading...
+const tableBody = document.getElementById('output');
 
-    table.innerHTML = `
-      <tr>
-        <td>Promise 1</td>
-        <td>${results[0]}</td>
-      </tr>
-      <tr>
-        <td>Promise 2</td>
-        <td>${results[1]}</td>
-      </tr>
-      <tr>
-        <td>Promise 3</td>
-        <td>${results[2]}</td>
-      </tr>
-      <tr>
-        <td>Total</td>
-        <td>${totalTime.toFixed(3)}</td>
-      </tr>
-    `;
+
+// Wait for all promises to resolve using Promise.all()
+const startTime = performance.now();
+Promise.all(promises).then(results => {
+  const endTime = performance.now();
+  const totalTime = (endTime - startTime) / 1000; // Convert to seconds
+
+  // Remove the loading text
+  tableBody.innerHTML = '';
+
+  // Populate the table with the required values
+  results.forEach(result => {
+    const row = document.createElement('tr');
+    row.innerHTML = <td>Promise ${result.index}</td><td>${(result.time / 1000).toFixed(3)}</td>;
+    tableBody.appendChild(row);
   });
 
+  // Add the total row
+  const totalRow = document.createElement('tr');
+  totalRow.innerHTML = <td>Total</td><td>${totalTime.toFixed(3)}</td>;
+  tableBody.appendChild(totalRow);
+});
